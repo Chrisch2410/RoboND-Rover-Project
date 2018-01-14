@@ -1,5 +1,43 @@
+[//]: # (Image References)
+
+[image1]: ../misc/rover_image.jpg
+[image2]: ../output/sample_img.jpg
+[image3]: ../output/grid_img.jpg
+[image4]: ../output/rock_img.jpg
+[image5]: ../output/navi_w.jpg
+[image6]: ../output/rock_w.jpg
+[image7]: ../output/navi_t.jpg
+[image8]: ../output/obst_t.jpg
+[image9]: ../output/rock_t.jpg
+[image10]: ../output/navi_wt.jpg
+[image11]: ../output/obst_wt.jpg
+[image12]: ../output/rock_wt.jpg
+[image13]: ../output/map_img.jpg
+[image14]: ../output/navi_rc.jpg
+[image15]: ../output/tst_frame.jpg
+
 ## Project: Search and Sample Return
-### Writeup Template: You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+![alt text][image1]
+### Writeup by Muthanna A.Attyah
+### Jan 2018
+
+##1. Project Environment Preparation:
+
+Please note that I have used the following environment to test/run the project:
+
+* Operating System: Ubuntu 16.04 LTS kernel 4.4.0-109-generic
+* Unity Simulator: Roversim.x86_64 
+* Unity Simulator Screen Resolution: 1024 x 640
+* Unity Simulator Graphics Quality: Fantastic
+* Anaconda: Version 4.4.7
+* RoboND anaconda environment
+
+##2. Recording data in "Training Mode"
+
+After getting the above mentioned enviroment components downloaded and installed, I have started recordering data from Rover Simulator in "Training Mode". in additon to the already provided "test_dataset" I have recorded in two new sets in two new folders "rec1_dataset" and "rec2_dataset". 
+
+"rec1_dataset" is a short recording I used it for rapid testing and change of fucntions. "rec2_dataset" is a long recording covering the full ground map and I used it to verify the final maping and fidelity of my functions before testing in autonomous mode.
+
 
 ---
 
@@ -20,29 +58,13 @@
 * Fill in the `decision_step()` function within the `decision.py` script with conditional statements that take into consideration the outputs of the `perception_step()` in deciding how to issue throttle, brake and steering commands. 
 * Iterate on your perception and decision function until your rover does a reasonable (need to define metric) job of navigating and mapping.  
 
-[//]: # (Image References)
 
-[image1]: ../misc/rover_image.jpg
-[image2]: ../output/sample_img.jpg
-[image3]: ../output/grid_img.jpg
-[image4]: ../output/rock_img.jpg
-[image5]: ../output/navi_w.jpg
-[image6]: ../output/rock_w.jpg
-[image7]: ../output/navi_t.jpg
-[image8]: ../output/obst_t.jpg
-[image9]: ../output/rock_t.jpg
-[image10]: ../output/navi_wt.jpg
-[image11]: ../output/obst_wt.jpg
-[image12]: ../output/rock_wt.jpg
-[image13]: ../output/map_img.jpg
-[image14]: ../output/navi_rc.jpg
-[image15]: ../output/tst_frame.jpg
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 
-![alt text][image1]
+
 ![alt text][image2]
 ![alt text][image3]
 ![alt text][image4]
