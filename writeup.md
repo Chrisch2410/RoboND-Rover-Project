@@ -22,12 +22,41 @@
 
 [//]: # (Image References)
 
-[image1]: ./misc/rover_image.jpg
-[image2]: ./calibration_images/example_grid1.jpg
-[image3]: ./calibration_images/example_rock1.jpg 
+[image1]: ../misc/rover_image.jpg
+[image2]: ../output/sample_img.jpg
+[image3]: ../output/grid_img.jpg
+[image4]: ../output/rock_img.jpg
+[image5]: ../output/navi_w.jpg
+[image6]: ../output/rock_w.jpg
+[image7]: ../output/navi_t.jpg
+[image8]: ../output/obst_t.jpg
+[image9]: ../output/rock_t.jpg
+[image10]: ../output/navi_wt.jpg
+[image11]: ../output/obst_wt.jpg
+[image12]: ../output/rock_wt.jpg
+[image13]: ../output/map_img.jpg
+[image14]: ../output/navi_rc.jpg
+[image15]: ../output/tst_frame.jpg
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
+
+
+![alt text][image1]
+![alt text][image2]
+![alt text][image3]
+![alt text][image4]
+![alt text][image5]
+![alt text][image6]
+![alt text][image7]
+![alt text][image8]
+![alt text][image9]
+![alt text][image10]
+![alt text][image11]
+![alt text][image12]
+![alt text][image13]
+![alt text][image14]
+![alt text][image15]
 
 ---
 ### Writeup / README
