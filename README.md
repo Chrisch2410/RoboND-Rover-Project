@@ -14,7 +14,7 @@
 ## Project: Search and Sample Return
 ### Writeup by Muthanna A.Attyah
 ### Jan 2018
-<p align="center"> ![alt text][image1] </p>
+<p align="center"> <img src="./figs/rover_image.jpg"> </p>
 
 ##1. Project Environment Preparation:
 
