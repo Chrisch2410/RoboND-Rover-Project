@@ -18,14 +18,17 @@ def navi_thresh(img):
     navi = np.zeros_like(img[:,:,0])
     navi[mask] = 1
     
-    navi[:int(img.shape[0]*.5),:]=0 # clip upper 50% to improve fidelity
+    navi[:int(img.shape[0]*.5),:]=0 # clip upper 50% of image to improve fidelity
     
     # Create an array of ones same xy size as img, but single channel
     # Index the array with the mask and set to 0
     obst = np.ones_like(img[:,:,0])
     obst[mask] = 0
-
+    
+    obst[:int(img.shape[0]*.5),:]=1 # clip upper 50% of image to improve fidelity
+    
     return navi,obst                        # Return both images
+
 
 # Define a function to threshold rock image and isolate the rock.
 def rock_thresh(img):
