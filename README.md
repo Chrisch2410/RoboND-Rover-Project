@@ -1,16 +1,3 @@
-
-[//]: # (Image References)
-[image1]: ./figs/rover_image.jpg
-[image2]: ./figs/warp_fun.jpg
-[image3]: ./figs/thresh_fun.jpg
-[image4]: ./figs/threshwarp_fun.jpg
-[image5]: ./figs/rover_coords.jpg
-[image6]: ./figs/world_space.jpg
-[image7]: ./figs/ground_truth.jpg
-[image8]: ./figs/test_frame.jpg
-
-
-
 ## Project: Search and Sample Return
 ### Writeup by Muthanna A.Attyah
 ### Jan 2018
@@ -37,19 +24,19 @@ Please note that I have used the following environment to test/run the project:
 ##3. Image Processing Pipeline
 
 ##4. Transform Function
-<p align="center"> ![alt text][image2] </p>
+<p align="center"> <img src="./figs/warp_fun.jpg"> </p>
 ##5. Color Threshold Function
-<p align="center"> ![alt text][image3] </p>
+<p align="center"> <img src="./figs/thresh_fun.jpg"> </p>
 ##6. Transform and Color Thresholding of Sample Image
-<p align="center"> ![alt text][image4] </p>
+<p align="center"> <img src="./figs/threshwarp_fun.jpg"> </p>
 ##7. Rover Centric Coordinates Functions
-<p align="center"> ![alt text][image5] </p>
+<p align="center"> <img src="./figs/rover_coords.jpg"> </p>
 ##8. World Map Image
-<p align="center"> ![alt text][image6] </p>
+<p align="center"> <img src="./figs/world_space.jpg"> </p>
 ##9. Ground Truth Map
-<p align="center"> ![alt text][image7] </p>
+<p align="center"> <img src="./figs/ground_truth.jpg"> </p>
 ##10. Image Processing Function
-<p align="center"> ![alt text][image8] </p>
+<p align="center"> <img src="./figs/test_frame.jpg"> </p>
 ##11. Producing a Video to test image processing pipeline
 
 ##12. Exporting Image Processing function to perception.py script
