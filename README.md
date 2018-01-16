@@ -54,7 +54,33 @@ From a highlevel, the image processing pipeline that will be required to process
 The next sections will discuss each function in the pipeline and show sample outputs from each.
 
 ## 4.3 Transform Function
+```python
+def navi_thresh(img):
 
+    # Threshold of RGB > 160 does a nice job of identifying ground pixels only
+    rgb_thr=(160,160,160)
+     
+    # mask will contain a boolean array with "True" for each pixel above threshold
+    mask = (img[:,:,0] > rgb_thr[0]) \
+         & (img[:,:,1] > rgb_thr[1]) \
+         & (img[:,:,2] > rgb_thr[2])
+
+    # Create an array of zeros same xy size as img, but single channel
+    # Index the array with the mask and set to 1
+    navi = np.zeros_like(img[:,:,0])
+    navi[mask] = 1
+    
+    navi[:int(img.shape[0]*.5),:]=0 # clip upper 50% of image to improve fidelity
+    
+    # Create an array of ones same xy size as img, but single channel
+    # Index the array with the mask and set to 0
+    obst = np.ones_like(img[:,:,0])
+    obst[mask] = 0
+    
+    obst[:int(img.shape[0]*.5),:]=1 # clip upper 50% of image to improve fidelity
+    
+    return navi,obst                        # Return both images
+```
 <p align="center"> <img src="./output/warp_fun.jpg"> </p>
 
 ## 4.4 Color Threshold Function
