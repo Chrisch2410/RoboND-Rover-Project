@@ -3,7 +3,7 @@
 ### Jan 2018
 <p align="center"> <img src="./figs/rover_image.jpg"> </p>
 
-##1. Project Environment Preparation:
+## 1. Project Environment Preparation:
 
 Please note that I have used the following environment to test/run the project:
 
@@ -14,33 +14,46 @@ Please note that I have used the following environment to test/run the project:
 * Anaconda: **Version 4.4.7**
 * RoboND Anaconda Environment
 
-##2. Recording data in Training Mode
+## 2. Recording data in Training Mode
 
 After getting the above mentioned enviroment components downloaded and installed, I have started recordering data from Rover Simulator in "Training Mode" using same resolution mentioned above. Recorded date was saved in two new folders "rec1_dataset" and "rec2_dataset" which will be used in additon to the already provided "test_dataset".
 "rec1_dataset" is a short recording covering 28% of ground and I used it for rapid testing to fine tune image processing function. "rec2_dataset" is a long recording covering 100% of ground map and I used it to verify the final maping and fidelity of image processing function before exporting it to perception.py script and testing it in autonomous mode.
 
 
-##3. Image Processing Pipeline
+## 3. Image Processing Pipeline
 
-##4. Transform Function
+## 4. Transform Function
+
 <p align="center"> <img src="./figs/warp_fun.jpg"> </p>
-##5. Color Threshold Function
+
+## 5. Color Threshold Function
+
 <p align="center"> <img src="./figs/thresh_fun.jpg"> </p>
-##6. Transform and Color Thresholding of Sample Image
+
+## 6. Transform and Color Thresholding of Sample Image
+
 <p align="center"> <img src="./figs/threshwarp_fun.jpg"> </p>
-##7. Rover Centric Coordinates Functions
+
+## 7. Rover Centric Coordinates Functions
+
 <p align="center"> <img src="./figs/rover_coords.jpg"> </p>
-##8. World Map Image
+
+## 8. World Map Image
 <p align="center"> <img src="./figs/world_space.jpg"> </p>
-##9. Ground Truth Map
+
+## 9. Ground Truth Map
+
 <p align="center"> <img src="./figs/ground_truth.jpg"> </p>
-##10. Image Processing Function
+
+## 10. Image Processing Function
+
 <p align="center"> <img src="./figs/test_frame.jpg"> </p>
-##11. Producing a Video to test image processing pipeline
 
-##12. Exporting Image Processing function to perception.py script
+## 11. Producing a Video to test image processing pipeline
 
-##13. Running **Autonomous Navigation/Mapping**
+## 12. Exporting Image Processing function to perception.py script
+
+## 13. Running **Autonomous Navigation/Mapping**
 
 
 * Fill in the `perception_step()` function within the `perception.py` script with the appropriate image processing functions to create a map and update `Rover()` data (similar to what you did with `process_image()` in the notebook). 
@@ -48,26 +61,19 @@ After getting the above mentioned enviroment components downloaded and installed
 * Iterate on your perception and decision function until your rover does a reasonable (need to define metric) job of navigating and mapping.  
 
 
-##13. Future improvments.
-
-
-
-
-
-
+## 13. Future improvments.
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
+
 ---
+
 ### Notebook Analysis
 #### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
 Here is an example of how to include an image in your writeup.
 
-
-
 #### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
 And another! 
-
 
 ### Autonomous Navigation and Mapping
 
