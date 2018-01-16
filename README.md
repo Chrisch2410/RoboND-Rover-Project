@@ -4,6 +4,8 @@
 ## Writeup by Muthanna A.Attyah
 ## Jan 2018
 
+## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
+
 <p align="center"> <img src="./misc/rover_image.jpg"> </p>
 
 ## 1. Project Environment Preparation:
@@ -71,6 +73,9 @@ Following python libraries was used as part of notebook analysis:
 
 ## 10. Image Processing Function
 
+Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
+And another! 
+
 <p align="center"> <img src="./output/test_frame.jpg"> </p>
 
 ## 11. Producing a Video to test image processing pipeline
@@ -79,12 +84,15 @@ The final testing video after implementing all above mentioned steps is uploaded
 
 [![test video](http://img.youtube.com/vi/3z5Nvw0yioA/default.jpg)](http://www.youtube.com/watch?v=3z5Nvw0yioA)
 
-as you can see in the video after covering more than 99.4% of the ground fidelity was 56.5% which is acceptable for this test but it can be much further improved.
+as you can see in the video after covering more than 99.4% of the ground; fidelity was 56.5% which is acceptable for this test but it can be much further improved.
 
 ## 12. Exporting Image Processing function to perception.py script
+Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
 
 ## 13. Running **Autonomous Navigation/Mapping**
 
+Launching in autonomous mode your rover can navigate and map autonomously.  
+Explain your results and how you might improve them in your writeup.  
 
 * Fill in the `perception_step()` function within the `perception.py` script with the appropriate image processing functions to create a map and update `Rover()` data (similar to what you did with `process_image()` in the notebook). 
 * Fill in the `decision_step()` function within the `decision.py` script with conditional statements that take into consideration the outputs of the `perception_step()` in deciding how to issue throttle, brake and steering commands. 
@@ -92,28 +100,6 @@ as you can see in the video after covering more than 99.4% of the ground fidelit
 
 
 ## 13. Future improvments.
-
-## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
-### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
-
----
-
-### Notebook Analysis
-#### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
-Here is an example of how to include an image in your writeup.
-
-#### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
-And another! 
-
-### Autonomous Navigation and Mapping
-
-#### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
-
-
-#### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
-
-
-
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
 
