@@ -312,7 +312,78 @@ ground_truth_3d = np.dstack((ground_truth,      # Blue channel
 
 <p align="center"> <img src="./output/ground_truth.jpg"> </p>
 
-## 4.9 Image Processing Function
+## 4.9 Reading Recorded Data
+
+CSV file generated from the Rover Simulator Recorder will be having the following data columns:
+
+(Path, SteerAngle, Throttle, Brake, Speed, X_Position, Y_Position, Pitch, Yaw, Roll)
+
+Number of rows will depend on how long the recording was done. for each row there will be one captured image in /IMG subfolder.
+
+You can pick one of the following datasets:
+
+rec1_dataset
+rec2_dataset
+test_dataset
+In [9]:
+
+
+
+```python
+csv_path = '../rec2_dataset/robot_log.csv'            # path to CSV file
+df = pd.read_csv(csv_path,delimiter=';',decimal='.')  # read all columns/rows into dataframe
+
+print(df[0:3])                                        # show 1st 3 samples
+```
+                                                Path  SteerAngle  Throttle  \
+0  /home/mkhuthir/RoboND-Rover-Project/rec2_datas...         0.0       0.0   
+1  /home/mkhuthir/RoboND-Rover-Project/rec2_datas...         0.0       0.0   
+2  /home/mkhuthir/RoboND-Rover-Project/rec2_datas...         0.0       0.0   
+
+   Brake  Speed  X_Position  Y_Position     Pitch       Yaw          Roll  
+0    1.0    0.0    99.66999    85.58897  0.000236  56.82556 -2.498685e-07  
+1    0.0    0.0    99.66999    85.58897  0.000236  56.82556 -4.337589e-07  
+2    0.0    0.0    99.66999    85.58897  0.000236  56.82556 -3.314796e-07 
+
+
+```python
+csv_img_list = df["Path"].tolist()  # Create list of image pathnames
+
+print(csv_img_list[0])              # Show 1st sample
+```
+/home/mkhuthir/RoboND-Rover-Project/rec2_dataset/IMG/robocam_2018_01_14_20_35_33_074.jpg
+
+
+Will create a data container class and populate it with saved data from csv file and Woldmap. Worldmap is instantiated as 200 x 200 grid corresponding to a 200m x 200m space (same size as the ground truth map: 200 x 200 pixels). This encompasses the full range of output position values in x and y from the sim.
+
+```python
+# define the class
+
+class Databucket():
+    def __init__(self):
+        self.images = csv_img_list  
+        self.xpos = df["X_Position"].values
+        self.ypos = df["Y_Position"].values
+        self.yaw  = df["Yaw"].values
+        self.pitch= df["Pitch"].values
+        self.roll = df["Roll"].values
+        self.sangl= df["SteerAngle"].values
+        self.brake= df["Brake"].values
+        self.throt= df["Throttle"].values
+        self.speed= df["Speed"].values
+        self.count = 0 # This will be a running index
+        self.worldmap = np.zeros((200, 200, 3)).astype(np.float)
+        self.ground_truth = ground_truth_3d # Ground truth worldmap
+
+        
+# Instantiate a Databucket()
+
+data = Databucket()
+
+# this will be a global variable/object that you can refer to in the process_image() function.
+```
+
+## 4.10 Image Processing Function
 
 Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
 And another! 
@@ -527,7 +598,7 @@ f.savefig('../output/test_frame.jpg')
 
 <p align="center"> <img src="./output/test_frame.jpg"> </p>
 
-## 4.10 Producing a Video to test image processing pipeline
+## 4.11 Producing a Video to test image processing pipeline
 
 The final testing video after implementing all above mentioned steps is uploaded on YouTube on the following link:
 
