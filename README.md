@@ -47,15 +47,21 @@ Following python libraries was used as part of notebook analysis:
 
 ## 4.2 Image Processing Pipeline
 
-From a highlevel, the image processing pipeline that will be required to process images aquired from the rover camera in order to produce rover driving angles and detect any golden rocks in the way will be as shown in below diagram.
+From a highlevel, the image processing pipeline that will be required to process images aquired from the rover camera in order to:
+
+* Produce rover driving angle.
+* Detect any golden rocks in the way 
+* Update World Map to show Navigation map
+
+can be summrized as shown in below diagram.
 
 <p align="center"> <img src="./misc/pipeline.jpg"> </p>
 
-The next sections will discuss each function in the pipeline and show sample outputs from each.
+In the next sections I will discuss each stage function in the pipeline and show sample outputs from each.
 
 ## 4.3 Perspective Transform Function
 
-First function in the pipeline is the perspective trnasform function which will convert image seen by the rover camera into a top-view image that will be used to map the navigable area. Transformation calculation is done with help of the provided calibration grid image. coordinates of the grid square that is directly in front of the rover camera is taken as source:
+First function in the pipeline is the perspective trnasform function which will convert image seen by the rover camera into a top-view image that will be used to map the navigable area, obistcale area, and golden rocks. Transformation calculation is done with help of the provided calibration grid image. coordinates of the grid square that is directly in front of the rover camera is taken as source:
 
 ```python
 src = np.float32([
@@ -66,7 +72,7 @@ src = np.float32([
                  ])              # above data captured from grid calibration image.
 ```
 
-then one sequare in a top view map is taken as destination:
+then one sequare in a top view map is taken as destination, adding 6 pixels to account for the unvisible distance from the rover edge to the 1st visible point.
 
 ```python
 hs_size = 10/2             # half the size of one square
@@ -81,7 +87,7 @@ dst = np.float32([
                  [x_cntr - hs_size, y_end - 2*hs_size - b_ofst], # Left Top
                  ])
 ```
-Then using OpenCV function 'cv2.warpPerspective()' to transform the prespective of aquired image from camera view into top-view.
+Using OpenCV function 'cv2.warpPerspective()' we can now transform the prespective of aquired image from camera view into top-view.
 
 ```python
 def perspect_transform(img, src, dst):
@@ -91,11 +97,45 @@ def perspect_transform(img, src, dst):
                                  M, 
                                  (img.shape[1], img.shape[0]))
 ```
-The results are as shown below:
+
+Below are outputs for navigable and rock sample images:
 
 <p align="center"> <img src="./output/warp_fun.jpg"> </p>
 
 ## 4.4 Color Threshold Function
+
+Next stage is the color thresholding function that will be required to identify the navigable, obistcale, and golden rock areas. Doing color thresholding on image before prespective transform or after the prespective transform will give the same results. So order is these two stages does not matter.
+
+For navigable/obsticale thresholding I used RGB numbers as advised in the project template since it was working fine and I have tried values other then 'rgb_thr=(160,160,160)' but reverted back later becuase I did not get any improved results in detection of navigable area.
+
+```python
+def navi_thresh(img):
+
+    # Threshold of RGB > 160 does a nice job of identifying ground pixels only
+    rgb_thr=(160,160,160)
+     
+    # mask will contain a boolean array with "True" for each pixel above threshold
+    mask = (img[:,:,0] > rgb_thr[0]) \
+         & (img[:,:,1] > rgb_thr[1]) \
+         & (img[:,:,2] > rgb_thr[2])
+
+    # Create an array of zeros same xy size as img, but single channel
+    # Index the array with the mask and set to 1
+    navi = np.zeros_like(img[:,:,0])
+    navi[mask] = 1
+    
+    navi[:int(img.shape[0]*.5),:]=0 # clip upper 50% of image to improve fidelity
+    
+    # Create an array of ones same xy size as img, but single channel
+    # Index the array with the mask and set to 0
+    obst = np.ones_like(img[:,:,0])
+    obst[mask] = 0
+    
+    obst[:int(img.shape[0]*.5),:]=1 # clip upper 50% of image to improve fidelity
+    
+    return navi,obst                        # Return both images
+
+```
 
 <p align="center"> <img src="./output/thresh_fun.jpg"> </p>
 
