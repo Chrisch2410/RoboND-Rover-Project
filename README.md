@@ -76,7 +76,8 @@ then one sequare in a top view map is taken as destination, adding 6 pixels to a
 
 ```python
 hs_size = 10/2             # half the size of one square
-b_ofst  = 6                # bottom offset to account for distance from rover edge to 1st camera visible point
+b_ofst  = 6                # bottom offset to account for distance from rover 
+                           # edge to 1st camera visible point
 x_cntr  = grid_img.shape[1]/2 # center of the image x axis
 y_end   = grid_img.shape[0]   # end of y or bottom of image
 
@@ -106,7 +107,7 @@ Below are outputs for navigable and rock sample images:
 
 Next stage is the color thresholding function that will be required to identify the navigable, obistcale, and golden rock areas. Doing color thresholding on image before prespective transform or after the prespective transform will give the same results. So order is these two stages does not matter.
 
-For navigable/obsticale thresholding I used RGB numbers as advised in the project template since it was working fine and I have tried values other then 'rgb_thr=(160,160,160)' but reverted back later becuase I did not get any improved results in detection of navigable area.
+For navigable/obsticale thresholding I used RGB numbers as advised in the project template since it was working fine and I have tried values other then `rgb_thr=(160,160,160)` but reverted back later becuase I did not get any improved results in detection of navigable area.
 
 ```python
 def navi_thresh(img):
