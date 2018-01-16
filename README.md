@@ -1,6 +1,9 @@
-## Project: Search and Sample Return
-### Writeup by Muthanna A.Attyah
-### Jan 2018
+
+[![Udacity - Robotics NanoDegree Program](https://s3-us-west-1.amazonaws.com/udacity-robotics/Extra+Images/RoboND_flag.png)](https://www.udacity.com/robotics)
+# Project 1:Search and Sample Return
+## Writeup by Muthanna A.Attyah
+## Jan 2018
+
 <p align="center"> <img src="./misc/rover_image.jpg"> </p>
 
 ## 1. Project Environment Preparation:
