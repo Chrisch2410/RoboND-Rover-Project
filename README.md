@@ -22,13 +22,13 @@ Please note that I have used the following environment to test/run the project:
 
 ## 2. Recording data in Training Mode
 
-After getting the above mentioned enviroment components downloaded and installed, I have started recordering data from Rover Simulator in "Training Mode" using same resolution mentioned above. Recorded date was saved in two new folders "rec1_dataset" and "rec2_dataset" which will be used in additon to the already provided "test_dataset".
+After getting the above mentioned environment components downloaded and installed, I have started reordering data from Rover Simulator in "Training Mode" using same resolution mentioned above. Recorded date was saved in two new folders "rec1_dataset" and "rec2_dataset" which will be used in addition to the already provided "test_dataset".
 
-"rec1_dataset" is a short recording covering 28% of ground and I used it for rapid testing to fine tune image processing function. "rec2_dataset" is a long recording covering 100% of ground map and I used it to verify the final maping and fidelity of image processing function before exporting it to perception.py script and testing it in autonomous mode.
+"rec1_dataset" is a short recording covering 28% of ground and I used it for rapid testing to fine tune image processing function. "rec2_dataset" is a long recording covering 100% of ground map and I used it to verify the final mapping and fidelity of image processing function before exporting it to perception.py script and testing it in autonomous mode.
 
 ## 4. Project Jupyter Notebook Analysis
 
-Jupter notebook was used to go through the full image processing pipeline starting from image acquestion until final navigation and mapping output.
+Jupyter notebook was used to go through the full image processing pipeline starting from image aquestion until final navigation and mapping output.
 
 ### 4.1 Used Python Libraries
 
@@ -75,8 +75,11 @@ Following python libraries was used as part of notebook analysis:
 
 ## 11. Producing a Video to test image processing pipeline
 
-YouTube Video:
-[![MuthSpider video](http://img.youtube.com/vi/3z5Nvw0yioA/default.jpg)](http://www.youtube.com/watch?v=3z5Nvw0yioA)
+The final testing video after implementing all above mentioned steps is uploaded on YouTube on the following link:
+
+<p align="center"> [![test video](http://img.youtube.com/vi/3z5Nvw0yioA/default.jpg)](http://www.youtube.com/watch?v=3z5Nvw0yioA) </p>
+
+as you can see in the video after covering more than 99.4% of the ground fidelity was 56.5% which is acceptable for this test but it can be much further improved.
 
 ## 12. Exporting Image Processing function to perception.py script
 
