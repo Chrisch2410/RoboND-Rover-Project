@@ -138,6 +138,20 @@ def navi_thresh(img):
 
 ```
 
+
+```python
+def rock_thresh(img):
+    
+    hsv_img=cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    
+    lower = np.array([0,200,100])
+    upper = np.array([179,255,255])
+    
+    rock_t = cv2.inRange(hsv_img, lower, upper)
+      
+    return rock_t
+```
+
 <p align="center"> <img src="./output/thresh_fun.jpg"> </p>
 
 ## 4.5 Transform and Color Thresholding of Sample Image
