@@ -53,34 +53,46 @@ From a highlevel, the image processing pipeline that will be required to process
 
 The next sections will discuss each function in the pipeline and show sample outputs from each.
 
-## 4.3 Transform Function
+## 4.3 Perspective Transform Function
+
+First function in the pipeline is the perspective trnasform function which will convert image seen by the rover camera into a top-view image that will be used to map the navigable area. Transformation calculation is done with help of the provided calibration grid image. coordinates of the grid square that is directly in front of the rover camera is taken as source:
+
 ```python
-def navi_thresh(img):
-
-    # Threshold of RGB > 160 does a nice job of identifying ground pixels only
-    rgb_thr=(160,160,160)
-     
-    # mask will contain a boolean array with "True" for each pixel above threshold
-    mask = (img[:,:,0] > rgb_thr[0]) \
-         & (img[:,:,1] > rgb_thr[1]) \
-         & (img[:,:,2] > rgb_thr[2])
-
-    # Create an array of zeros same xy size as img, but single channel
-    # Index the array with the mask and set to 1
-    navi = np.zeros_like(img[:,:,0])
-    navi[mask] = 1
-    
-    navi[:int(img.shape[0]*.5),:]=0 # clip upper 50% of image to improve fidelity
-    
-    # Create an array of ones same xy size as img, but single channel
-    # Index the array with the mask and set to 0
-    obst = np.ones_like(img[:,:,0])
-    obst[mask] = 0
-    
-    obst[:int(img.shape[0]*.5),:]=1 # clip upper 50% of image to improve fidelity
-    
-    return navi,obst                        # Return both images
+src = np.float32([
+                 [14, 140],      # Left Bottom
+                 [301 ,140],     # Right Bottom
+                 [200, 96],      # Right Top
+                 [118, 96]       # Left Top
+                 ])              # above data captured from grid calibration image.
 ```
+
+then one sequare in a top view map is taken as destination:
+
+```python
+hs_size = 10/2             # half the size of one square
+b_ofst  = 6                # bottom offset to account for distance from rover edge to 1st camera visible point
+x_cntr  = grid_img.shape[1]/2 # center of the image x axis
+y_end   = grid_img.shape[0]   # end of y or bottom of image
+
+dst = np.float32([
+                 [x_cntr - hs_size, y_end - b_ofst],             # Left Bottom
+                 [x_cntr + hs_size, y_end - b_ofst],             # Right Bottom
+                 [x_cntr + hs_size, y_end - 2*hs_size - b_ofst], # Right Top
+                 [x_cntr - hs_size, y_end - 2*hs_size - b_ofst], # Left Top
+                 ])
+```
+Then using OpenCV function 'cv2.warpPerspective()' to transform the prespective of aquired image from camera view into top-view.
+
+```python
+def perspect_transform(img, src, dst):
+
+    M = cv2.getPerspectiveTransform(src, dst)  # Get transform matrix using src and dst boxes
+    warped = cv2.warpPerspective(img,          # Warp image keep same size as input image 
+                                 M, 
+                                 (img.shape[1], img.shape[0]))
+```
+The results are as shown below:
+
 <p align="center"> <img src="./output/warp_fun.jpg"> </p>
 
 ## 4.4 Color Threshold Function
