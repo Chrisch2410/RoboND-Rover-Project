@@ -157,7 +157,8 @@ def rock_thresh(img):
 ## 4.5 Perspective Transform and Color Thresholding of Sample Image
 
 ```python
-navi_wt,obst_wt = navi_thresh(navi_w)  # Threshold warped image to show both navigable and obstacles areas
+navi_wt,obst_wt = navi_thresh(navi_w)  # Threshold warped image to show 
+                                       # both navigable and obstacles areas
 rock_wt         = rock_thresh(rock_w)  # Threshold calibration image to isolate the rock
 ```
 
@@ -218,6 +219,30 @@ def pix_to_world(xpix, ypix, xpos, ypos, yaw, world_size, scale):
     y_pix_world = np.clip(np.int_(ypix_tran), 0, world_size - 1)
     # Return the result
     return x_pix_world, y_pix_world
+```
+
+
+```python
+# Grab another random image
+idx = np.random.randint(0, len(img_list)-1)
+navi_img = mpimg.imread(img_list[idx])
+
+# Transform images
+navi_w = perspect_transform(navi_img, src, dst)
+navi_t,obst_t = navi_thresh(navi_w)
+
+# Calculate pixel values in rover-centric coords and distance/angle to all pixels
+xpix, ypix = rover_coords(navi_t)
+dist, angles = to_polar_coords(xpix, ypix)
+mean_dir = np.mean(angles)
+angle = np.clip(mean_dir*180/np.pi,-15,15)
+```
+
+```python
+print("dist =",dist[0:3])
+print("angles =",angles[0:3])
+print("mean_dir =",mean_dir)
+print("Angle =",angle)
 ```
 
 <p align="center"> <img src="./output/rover_coords.jpg"> </p>
