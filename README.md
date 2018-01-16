@@ -16,7 +16,8 @@ Please note that I have used the following environment to test/run the project:
 * Unity Simulator: **Roversim.x86_64**
 * Unity Simulator Screen Resolution: **1024 x 640**
 * Unity Simulator Graphics Quality: **Fantastic**
-* Frames Per Second output: **60 FPS**
+* Test Video recording FPS: **60 FPS**
+* drive_rover.py FPS: **16-18 FPS**
 * Anaconda: **Version 4.4.7**
 * RoboND Anaconda Environment
 
@@ -44,41 +45,45 @@ Following python libraries was used as part of notebook analysis:
 * **pandas**: to read a CSV file into a dataframe
 * **imageio**: to read images and video.
 
-## 3. Image Processing Pipeline
+## 4.2 Image Processing Pipeline
+
+From a highlevel, the image processing pipeline that will be required to process images aquired from the rover camera in order to produce rover driving angles and detect any golden rocks in the way will be as shown in below diagram.
 
 <p align="center"> <img src="./misc/pipeline.jpg"> </p>
 
-## 4. Transform Function
+The next sections will discuss each function in the pipeline and show sample outputs from each.
+
+## 4.3 Transform Function
 
 <p align="center"> <img src="./output/warp_fun.jpg"> </p>
 
-## 5. Color Threshold Function
+## 4.4 Color Threshold Function
 
 <p align="center"> <img src="./output/thresh_fun.jpg"> </p>
 
-## 6. Transform and Color Thresholding of Sample Image
+## 4.5 Transform and Color Thresholding of Sample Image
 
 <p align="center"> <img src="./output/threshwarp_fun.jpg"> </p>
 
-## 7. Rover Centric Coordinates Functions
+## 4.6 Rover Centric Coordinates Functions
 
 <p align="center"> <img src="./output/rover_coords.jpg"> </p>
 
-## 8. World Map Image
+## 4.7 World Map Image
 <p align="center"> <img src="./output/world_space.jpg"> </p>
 
-## 9. Ground Truth Map
+## 4.8 Ground Truth Map
 
 <p align="center"> <img src="./output/ground_truth.jpg"> </p>
 
-## 10. Image Processing Function
+## 4.9 Image Processing Function
 
 Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
 And another! 
 
 <p align="center"> <img src="./output/test_frame.jpg"> </p>
 
-## 11. Producing a Video to test image processing pipeline
+## 4.10 Producing a Video to test image processing pipeline
 
 The final testing video after implementing all above mentioned steps is uploaded on YouTube on the following link:
 
@@ -86,10 +91,10 @@ The final testing video after implementing all above mentioned steps is uploaded
 
 as you can see in the video after covering more than 99.4% of the ground; fidelity was 56.5% which is acceptable for this test but it can be much further improved.
 
-## 12. Exporting Image Processing function to perception.py script
+## 5. Exporting Image Processing function to perception.py script
 Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
 
-## 13. Running **Autonomous Navigation/Mapping**
+## 6. Running **Autonomous Navigation/Mapping**
 
 Launching in autonomous mode your rover can navigate and map autonomously.  
 Explain your results and how you might improve them in your writeup.  
@@ -99,7 +104,7 @@ Explain your results and how you might improve them in your writeup.
 * Iterate on your perception and decision function until your rover does a reasonable (need to define metric) job of navigating and mapping.  
 
 
-## 13. Future improvments.
+## 7. Future improvments.
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
 
