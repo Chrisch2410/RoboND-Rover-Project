@@ -298,12 +298,232 @@ Xpos = [ 98.39547196] Ypos = [ 154.14458693] Yaw = [ 225.00715458]
 
 ## 4.8 Ground Truth Map
 
+```python
+map_path = '../calibration_images/map_bw.png'     # path to ground_truth image file
+
+ground_truth = mpimg.imread(map_path)             # read ground_truth image
+
+ground_truth_3d = np.dstack((ground_truth,      # Blue channel
+                             ground_truth*255,  # Green channel
+                             ground_truth       # Red channel
+                            )
+                           ).astype(np.float)   # all BGR numbers are float
+```
+
 <p align="center"> <img src="./output/ground_truth.jpg"> </p>
 
 ## 4.9 Image Processing Function
 
 Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
 And another! 
+
+```python
+# Define a function to pass stored images to reading rover position and yaw angle from csv file
+# This function will be used by moviepy to create an output video
+
+def process_image(img):
+
+# 1) Define source and destination points for perspective transform
+#------------------------------------------------------------------
+    
+    scale    = 10             # each 10x10 pixel square represents 1 square meter
+    hs_size  = scale/2        # half the size of one square
+    b_ofst   = 6              # bottom offset to account for distance from rover edge to 1st camera visible point
+    x_cntr   = img.shape[1]/2 # center of the image x axis
+    x_max    = img.shape[1]   # end of x or right edge of image
+    y_max    = img.shape[0]   # end of y or bottom edge of image
+    
+    rvr_xpos = data.xpos[data.count]
+    rvr_ypos = data.ypos[data.count]
+    rvr_yaw  = data.yaw[data.count]
+    wrl_shp0 = data.worldmap.shape[0]
+    
+    
+    src = np.float32([
+                     [14, 140],      # Left Bottom
+                     [301 ,140],     # Right Bottom
+                     [200, 96],      # Right Top
+                     [118, 96]       # Left Top
+                     ])              # above data captured from grid calibration image.
+
+    dst = np.float32([
+                     [x_cntr - hs_size, y_max - b_ofst],             # Left Bottom
+                     [x_cntr + hs_size, y_max - b_ofst],             # Right Bottom
+                     [x_cntr + hs_size, y_max - 2*hs_size - b_ofst], # Right Top
+                     [x_cntr - hs_size, y_max - 2*hs_size - b_ofst], # Left Top
+                     ])
+    
+# 2) Apply perspective transform
+#------------------------------------------------------------------
+
+    img_w = perspect_transform(img, src, dst) #warp the image
+
+# 3) Apply color threshold to identify navigable terrain/obstacles/rock samples
+#------------------------------------------------------------------
+    navi_wt,obst_wt = navi_thresh(img_w)  # Threshold warped image to show both navigable and obstacles areas
+    rock_wt = rock_thresh(img_w)           # Threshold calibration image to isolate the rock
+    
+# 4) Convert thresholded image pixel values to rover-centric coords
+#------------------------------------------------------------------
+    navix_pix, naviy_pix = rover_coords(navi_wt)  # convert navigable area thresholded to rover coords.
+    obstx_pix, obsty_pix = rover_coords(obst_wt)  # convert obstacle area thresholded to rover coords.
+    rockx_pix, rocky_pix = rover_coords(rock_wt)  # convert rock thresholded to rover coords.
+        
+# 5) Convert rover-centric pixel values to world coords
+#------------------------------------------------------------------
+    
+    naviy_wld, navix_wld = pix_to_world(navix_pix, naviy_pix,          # convert navigable area
+                                        rvr_xpos, rvr_ypos, rvr_yaw,
+                                        wrl_shp0,scale)
+    
+    obsty_wld, obstx_wld = pix_to_world(obstx_pix, obsty_pix,          # convert obsticale area
+                                        rvr_xpos, rvr_ypos, rvr_yaw,
+                                        wrl_shp0,scale)
+    
+    rocky_wld, rockx_wld = pix_to_world(rockx_pix, rocky_pix,          # convert rock area
+                                        rvr_xpos, rvr_ypos, rvr_yaw,
+                                        wrl_shp0,scale)
+    
+    
+    
+# 6) Update worldmap (to be displayed on right side of screen)
+#------------------------------------------------------------------
+    data.worldmap[obstx_wld, obsty_wld, 0] = 255 # set obsticale area pixels to RED
+    data.worldmap[navix_wld, naviy_wld, 2] = 255 # set navigable area pixels to BLUE
+    data.worldmap[rockx_wld, rocky_wld, :] = 255 # set rock area to WHITE
+
+    navi = data.worldmap[:,:,2]==255 # index of all navigable pixels
+    data.worldmap[navi,0]=0          # reset corresponding obsticale pixels
+    
+    
+# 7) Make a mosaic image
+#------------------------------------------------------------------     
+    frame = np.zeros((img.shape[0] + data.worldmap.shape[0], 
+                      img.shape[1]*2, 
+                      3))                          # create a blank image
+    frame[0:img.shape[0], 0:img.shape[1]] = img    # add camera image to top-left
+    frame[0:img.shape[0], img.shape[1]:]  = img_w  # add warped image to top-right
+
+    map_add = cv2.addWeighted(data.worldmap,1,     # mix world map with ground truth
+                              data.ground_truth,0.5,
+                              0) 
+
+    
+# 8) Add rover location and direction marker to mosaic image
+#------------------------------------------------------------------    
+
+    
+    ryaw  = rvr_yaw*np.pi/180               # convert yaw from deg to rad
+    
+    ac = (255,255,255)                      # arrow color
+    al = 5                                  # arrow half length
+    fx = int(rvr_xpos+(al * np.cos(ryaw)))  # arrow head point x based on current rover yaw
+    fy = int(rvr_ypos+(al * np.sin(ryaw)))  # arrow head point y based on current rover yaw
+    bx = int(rvr_xpos)                      # arrow start point x
+    by = int(rvr_ypos)                      # arrow start point y
+            
+    cv2.arrowedLine(map_add,(bx,by),(fx,fy),ac)
+        
+    frame[img.shape[0]:, 0:data.worldmap.shape[1]] = np.flipud(map_add)  # add mixed map to bottom-left
+
+
+# 9) Show telemetry values (bottom-right)
+#------------------------------------------------------------------
+
+    # Calculate some statistics on the map results
+    
+    # total pix in the navigable area
+    tot_nav_pix = np.float(len((data.worldmap[:,:,2].nonzero()[0])))  
+    
+    # how many correspond to truth
+    good_nav_pix = np.float(len(((data.worldmap[:,:,2] > 0) & (data.ground_truth[:,:,1] > 0)).nonzero()[0]))
+    
+    # how many do not correspond to truth
+    bad_nav_pix = np.float(len(((data.worldmap[:,:,2] > 0) & (data.ground_truth[:,:,1] == 0)).nonzero()[0]))
+    
+    # Grab the total number of map pixels
+    tot_map_pix = np.float(len((data.ground_truth[:,:,1].nonzero()[0])))
+    
+    # Calculate the percentage of ground truth map that has been successfully found
+    perc_mapped = round(100*good_nav_pix/tot_map_pix, 1)
+    
+    # number of good map pixel detections divided by total pixels found to be navigable terrain
+    if tot_nav_pix > 0:
+        fidelity = round(100*good_nav_pix/(tot_nav_pix), 1)
+    else:
+        fidelity = 0
+
+
+
+    # text style
+    tox =img.shape[1]+20          # Text X offset from top left corner
+    toy =img.shape[0]             # Text Y offset from top left corner
+    tc  =(255, 255, 255)          # Text color
+    tc2 =(0, 255, 0)          # Text color 2
+    tf  =cv2.FONT_HERSHEY_COMPLEX # Text font
+    ts  =0.4                      # Text size
+    
+    # text value
+    txt1="Xpos="+str(np.round(data.xpos[data.count],2))+\
+         " Ypos="+str(np.round(data.ypos[data.count],2))
+        
+    txt2="Yaw="+str(np.round(data.yaw[data.count],2))+\
+         " Roll="+str(np.round(data.roll[data.count],2))
+            
+    txt3="Pitch="+str(np.round(data.pitch[data.count],2))+\
+         " S.Angle="+str(np.round(data.sangl[data.count],2))
+         
+    
+    txt4="Throttle="+str(np.round(data.throt[data.count],2))+\
+         " Speed="+str(np.round(data.speed[data.count],2))
+         
+    txt5="Brake="+str(np.round(data.brake[data.count],2))
+    
+    txt6="Mapped: "+str(perc_mapped)+'%'
+    
+    txt7="Fidelity: "+str(fidelity)+'%'
+    
+    txt8="RoboND Project 1"
+    
+    txt9="By: Muthanna Attyah"
+    
+    # Add text to frame
+    cv2.putText(frame,txt1,(tox,toy+20),tf,ts,tc,1)
+    cv2.putText(frame,txt2,(tox,toy+40),tf,ts,tc,1)
+    cv2.putText(frame,txt3,(tox,toy+60),tf,ts,tc,1)
+    cv2.putText(frame,txt4,(tox,toy+80),tf,ts,tc,1)
+    cv2.putText(frame,txt5,(tox,toy+100),tf,ts,tc,1)
+    cv2.putText(frame,txt6,(tox,toy+120),tf,ts,tc,1)
+    cv2.putText(frame,txt7,(tox,toy+140),tf,ts,tc,1)
+    cv2.putText(frame,txt8,(tox+140,toy+120),tf,ts,tc2,1)
+    cv2.putText(frame,txt9,(tox+140,toy+140),tf,ts,tc2,1)
+    
+#------------------------------------------------------------------
+    
+    if data.count < len(data.images) - 1:
+        data.count += 1 # Keep track of the index in the Databucket()
+    
+    return frame
+
+```
+
+```python
+# test function with one sample
+data = Databucket()
+
+# Grab random image from data
+idx = np.random.randint(0, len(data.images) - 1) 
+navi_img = mpimg.imread(data.images[idx])
+tst_frame = process_image(navi_img)
+
+# Show frame
+f,ax =  plt.subplots(1, 1, figsize=(14,7))
+ax.set_title('One Sample Video Frame', fontsize=20)
+ax.imshow(tst_frame.astype(np.uint8))
+
+# Save figure for project report
+f.savefig('../output/test_frame.jpg')
+```
 
 <p align="center"> <img src="./output/test_frame.jpg"> </p>
 
