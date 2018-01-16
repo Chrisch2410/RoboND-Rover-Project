@@ -1,6 +1,6 @@
 
 [![Udacity - Robotics NanoDegree Program](https://s3-us-west-1.amazonaws.com/udacity-robotics/Extra+Images/RoboND_flag.png)](https://www.udacity.com/robotics)
-# Project 1:Search and Sample Return
+# Project 1: Search and Sample Return
 ## Writeup by Muthanna A.Attyah
 ## Jan 2018
 
@@ -23,6 +23,7 @@ Please note that I have used the following environment to test/run the project:
 ## 2. Recording data in Training Mode
 
 After getting the above mentioned enviroment components downloaded and installed, I have started recordering data from Rover Simulator in "Training Mode" using same resolution mentioned above. Recorded date was saved in two new folders "rec1_dataset" and "rec2_dataset" which will be used in additon to the already provided "test_dataset".
+
 "rec1_dataset" is a short recording covering 28% of ground and I used it for rapid testing to fine tune image processing function. "rec2_dataset" is a long recording covering 100% of ground map and I used it to verify the final maping and fidelity of image processing function before exporting it to perception.py script and testing it in autonomous mode.
 
 ## 4. Project Jupyter Notebook Analysis
@@ -73,6 +74,9 @@ Following python libraries was used as part of notebook analysis:
 <p align="center"> <img src="./output/test_frame.jpg"> </p>
 
 ## 11. Producing a Video to test image processing pipeline
+
+YouTube Video:
+[![MuthSpider video](http://img.youtube.com/vi/3z5Nvw0yioA/default.jpg)](http://www.youtube.com/watch?v=3z5Nvw0yioA)
 
 ## 12. Exporting Image Processing function to perception.py script
 
