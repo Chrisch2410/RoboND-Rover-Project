@@ -24,7 +24,7 @@ After getting the above mentioned enviroment components downloaded and installed
 
 ## 4. Transform Function
 
-<p align="center"> <img src="./outputs/warp_fun.jpg"> </p>
+<p align="center"> <img src="./output/warp_fun.jpg"> </p>
 
 ## 5. Color Threshold Function
 
