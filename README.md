@@ -11,8 +11,11 @@ Please note that I have used the following environment to test/run the project:
 * Unity Simulator: **Roversim.x86_64**
 * Unity Simulator Screen Resolution: **1024 x 640**
 * Unity Simulator Graphics Quality: **Fantastic**
+* Frames Per Second output: **60 FPS**
 * Anaconda: **Version 4.4.7**
 * RoboND Anaconda Environment
+
+**Note:** running the simulator with different choices of resolution and graphics quality may produce different results, particularly on different machines!  
 
 ## 2. Recording data in Training Mode
 
@@ -82,7 +85,7 @@ And another!
 
 #### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
 
-**Note: running the simulator with different choices of resolution and graphics quality may produce different results, particularly on different machines!  Make a note of your simulator settings (resolution and graphics quality set on launch) and frames per second (FPS output to terminal by `drive_rover.py`) in your writeup when you submit the project so your reviewer can reproduce your results.**
+
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
