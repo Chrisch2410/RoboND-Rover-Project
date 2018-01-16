@@ -1,7 +1,7 @@
 ## Project: Search and Sample Return
 ### Writeup by Muthanna A.Attyah
 ### Jan 2018
-<p align="center"> <img src="./figs/rover_image.jpg"> </p>
+<p align="center"> <img src="./output/rover_image.jpg"> </p>
 
 ## 1. Project Environment Preparation:
 
@@ -24,30 +24,30 @@ After getting the above mentioned enviroment components downloaded and installed
 
 ## 4. Transform Function
 
-<p align="center"> <img src="./figs/warp_fun.jpg"> </p>
+<p align="center"> <img src="./outputs/warp_fun.jpg"> </p>
 
 ## 5. Color Threshold Function
 
-<p align="center"> <img src="./figs/thresh_fun.jpg"> </p>
+<p align="center"> <img src="./output/thresh_fun.jpg"> </p>
 
 ## 6. Transform and Color Thresholding of Sample Image
 
-<p align="center"> <img src="./figs/threshwarp_fun.jpg"> </p>
+<p align="center"> <img src="./output/threshwarp_fun.jpg"> </p>
 
 ## 7. Rover Centric Coordinates Functions
 
-<p align="center"> <img src="./figs/rover_coords.jpg"> </p>
+<p align="center"> <img src="./output/rover_coords.jpg"> </p>
 
 ## 8. World Map Image
-<p align="center"> <img src="./figs/world_space.jpg"> </p>
+<p align="center"> <img src="./output/world_space.jpg"> </p>
 
 ## 9. Ground Truth Map
 
-<p align="center"> <img src="./figs/ground_truth.jpg"> </p>
+<p align="center"> <img src="./output/ground_truth.jpg"> </p>
 
 ## 10. Image Processing Function
 
-<p align="center"> <img src="./figs/test_frame.jpg"> </p>
+<p align="center"> <img src="./output/test_frame.jpg"> </p>
 
 ## 11. Producing a Video to test image processing pipeline
 
