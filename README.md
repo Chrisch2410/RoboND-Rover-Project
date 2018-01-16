@@ -245,9 +245,55 @@ print("mean_dir =",mean_dir)
 print("Angle =",angle)
 ```
 
+dist = [ 134.40238093  133.6001497   132.80060241]
+angles = [ 0.93324753  0.92879222  0.92428318]
+mean_dir = 0.549806601238
+Angle = 15.0
+
+
 <p align="center"> <img src="./output/rover_coords.jpg"> </p>
 
 ## 4.7 World Map Image
+
+```python
+# Rover yaw values will come as floats from 0 to 360
+# Generate a random value in this range
+# Note: you need to convert this to radians before adding to pixel_angles
+rover_yaw = np.random.random(1)*360
+
+# Generate a random rover position in world coords
+# Position values will range from 20 to 180 to avoid the edges in a 200 x 200 pixel world
+rover_xpos = np.random.random(1)*160 + 20
+rover_ypos = np.random.random(1)*160 + 20
+
+worldmap = np.zeros((200, 200))  # create empty image for use in testing
+scale = 10                       # world map scale
+
+# Note: Since we've chosen random numbers for yaw and position, 
+# multiple run of the code will result in different outputs each time.
+
+# Get navigable pixel positions in world coords
+
+x_world, y_world = pix_to_world(xpix, ypix, 
+                                rover_xpos, rover_ypos, rover_yaw, 
+                                worldmap.shape[0], 
+                                scale)
+
+
+# Add pixel positions to worldmap
+
+worldmap[y_world, x_world] += 1
+```
+
+
+```python
+# Show results
+
+print('Xpos =', rover_xpos, 'Ypos =', rover_ypos, 'Yaw =', rover_yaw)
+```
+
+Xpos = [ 98.39547196] Ypos = [ 154.14458693] Yaw = [ 225.00715458]
+
 <p align="center"> <img src="./output/world_space.jpg"> </p>
 
 ## 4.8 Ground Truth Map
