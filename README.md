@@ -77,7 +77,7 @@ Following python libraries was used as part of notebook analysis:
 
 The final testing video after implementing all above mentioned steps is uploaded on YouTube on the following link:
 
-<p align="center"> [![test video](http://img.youtube.com/vi/3z5Nvw0yioA/default.jpg)](http://www.youtube.com/watch?v=3z5Nvw0yioA) </p>
+[![test video](http://img.youtube.com/vi/3z5Nvw0yioA/default.jpg)](http://www.youtube.com/watch?v=3z5Nvw0yioA)
 
 as you can see in the video after covering more than 99.4% of the ground fidelity was 56.5% which is acceptable for this test but it can be much further improved.
 
