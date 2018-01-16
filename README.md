@@ -40,6 +40,8 @@ Following python libraries was used as part of notebook analysis:
 
 ## 3. Image Processing Pipeline
 
+<p align="center"> <img src="./misc/pipeline.jpg"> </p>
+
 ## 4. Transform Function
 
 <p align="center"> <img src="./output/warp_fun.jpg"> </p>
