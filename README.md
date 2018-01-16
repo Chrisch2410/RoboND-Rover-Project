@@ -22,6 +22,21 @@ Please note that I have used the following environment to test/run the project:
 After getting the above mentioned enviroment components downloaded and installed, I have started recordering data from Rover Simulator in "Training Mode" using same resolution mentioned above. Recorded date was saved in two new folders "rec1_dataset" and "rec2_dataset" which will be used in additon to the already provided "test_dataset".
 "rec1_dataset" is a short recording covering 28% of ground and I used it for rapid testing to fine tune image processing function. "rec2_dataset" is a long recording covering 100% of ground map and I used it to verify the final maping and fidelity of image processing function before exporting it to perception.py script and testing it in autonomous mode.
 
+## 4. Project Jupyter Notebook Analysis
+
+Jupter notebook was used to go through the full image processing pipeline starting from image acquestion until final navigation and mapping output.
+
+### 4.1 Used Python Libraries
+
+Following python libraries was used as part of notebook analysis:
+
+* **numpy**: for array maths, image can be treated as array of numbers and modified using numpy.
+* **matplotlib.pyplot**: to plot results in a very fancy figures and save them as images for this report.
+* **matplotlib.image**: to read images from files.
+* **cv2**: OpenCV for perspective transform.
+* **glob**: to read in a list of images from a folder.
+* **pandas**: to read a CSV file into a dataframe
+* **imageio**: to read images and video.
 
 ## 3. Image Processing Pipeline
 
