@@ -169,6 +169,9 @@ def rock_thresh(img):
 
 Now testing both perspective and thresholding functions on both navigable area and rock samples is giving us the required top view that will be used to produce the driving angle and update world maps.
 
+As you can see there is 50% clipping in both navigable and obstacle areas to reduce error in identifying the related pixels.
+
+Rock sample image is producing very small area without splash in this case since the rock is directly in front of the camera in this sample image. Splash issue will happen when rock is far from camera.
 
 ```python
 navi_wt,obst_wt = navi_thresh(navi_w)  # Threshold warped image to show 
