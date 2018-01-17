@@ -169,21 +169,23 @@ def rock_thresh(img):
 
 Now testing both perspective and thresholding functions on both navigable area and rock samples is giving us the required top view that will be used to produce the driving angle and update world maps.
 
-As you can see there is 50% clipping in both navigable and obstacle areas to reduce error in identifying the related pixels.
-
-Rock sample image is producing very small area without splash in this case since the rock is directly in front of the camera in this sample image. Splash issue will happen when rock is far from camera.
-
 ```python
 navi_wt,obst_wt = navi_thresh(navi_w)  # Threshold warped image to show 
                                        # both navigable and obstacles areas
 rock_wt         = rock_thresh(rock_w)  # Threshold calibration image to isolate the rock
 ```
 
+As you can see there is 50% clipping in both navigable and obstacle areas to reduce error in identifying the related pixels.
+
+Rock sample image is producing very small area without splash in this case since the rock is directly in front of the camera in this sample image. Splash issue will happen when rock is far from camera.
+
 <p align="center"> <img src="./output/threshwarp_fun.jpg"> </p>
 
 ## 4.6 Rover Centric Coordinates Functions
 
+In order to describe the positions of things in the environment with respect to the rover robot (or more specifically, the rover's camera) we need to convert the top view pixels coordinates that was generated from the previous perspective/threshold stage to a rover centric coordinates. This can be done by removing the x,y offset of the robot position and rotating the whole image based on robot yaw. When the rover is situated in the world at position (xworld,yworld)=(0,0) at a yaw angle of zero (yaw is measured counterclockwise from the positive x-direction) then the rover's coordinate frame exactly matches the world frame.
 
+Function code is same as what was provided by project template without any change.
 
 ```python
 # Define a function to convert from image coords to rover coords
