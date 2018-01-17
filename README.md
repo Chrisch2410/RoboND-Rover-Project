@@ -144,7 +144,11 @@ def navi_thresh(img):
     return navi,obst                        # Return both images
 
 ```
+For golden rock color thresholding initially I tried to use RGB color space to do the thresholding then I changed to use HSV color space since it was easier for me using GIMP color picker to identify the rock colors.
 
+I started with lower limit [0,180,100] and upper limit [179,255,255] but I noticed that few obstacle regions were identified as golden rocks then I was able to fix it by increasing the lower limit to [0,200,100].
+
+One issue that needs to be fixed as part of improvements is that rocks are always splashed when doing the perspective transform due to the fact that it is higher than ground level and we are transforming it using 2D not 3D vision.
 
 ```python
 def rock_thresh(img):
@@ -638,3 +642,5 @@ Color thresholding used for identification of navigable area can be furher impro
 Image transformation can also be further improved by applying a better image cropping mask before transforming the perspective. In my code I clipped upper 50% part of the image using a stright line and there was very good improvement in results. Trying a curve clipping might give even better results.
 
 Another way is to skip images that are aquired when the rover having a +ve or -ve pitch not near zero as suggested in project text.
+
+One issue that needs to be fixed as part of future improvements is that rocks are always splashed when doing the perspective transform due to the fact that it is higher than ground level and we are transforming it using 2D not 3D vision.
