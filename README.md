@@ -240,6 +240,7 @@ def pix_to_world(xpix, ypix, xpos, ypos, yaw, world_size, scale):
     return x_pix_world, y_pix_world
 ```
 
+To test the coordinates conversion functions we can pick a random image from the recoded dataset pass it through the full pipeline as in the following code:
 
 ```python
 # Grab another random image
@@ -256,6 +257,7 @@ dist, angles = to_polar_coords(xpix, ypix)
 mean_dir = np.mean(angles)
 angle = np.clip(mean_dir*180/np.pi,-15,15)
 ```
+Then I have added the following `print()` commands to show first 3 numbers from dist and angles arrays then print the mean direction and angle in degrees:
 
 ```python
 print("dist =",dist[0:3])
@@ -265,10 +267,14 @@ print("Angle =",angle)
 ```
 
 dist = [ 134.40238093  133.6001497   132.80060241]
+
 angles = [ 0.93324753  0.92879222  0.92428318]
+
 mean_dir = 0.549806601238
+
 Angle = 15.0
 
+Following figure is showing the converted coordinates along with arrow showing the driving direction for the particular sample image:
 
 <p align="center"> <img src="./output/rover_coords.jpg"> </p>
 
