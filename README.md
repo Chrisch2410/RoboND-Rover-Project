@@ -607,19 +607,24 @@ The final testing video after implementing all above mentioned steps is uploaded
 as you can see in the video after covering more than 99.4% of the ground; fidelity was 56.5% which is acceptable for this test but it can be much further improved.
 
 ## 5. Exporting Image Processing function to perception.py script
+
 Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
 
-## 6. Running **Autonomous Navigation/Mapping**
+## 6. Updateing Decision Script
+
+Fill in the `decision_step()` function within the `decision.py` script with conditional statements that take into consideration the outputs of the `perception_step()` in deciding how to issue throttle, brake and steering commands. 
+
+## 7. Running **Autonomous Navigation/Mapping**
+
+As per the project requirment the rover must **map at least 40%** of the environment with **60% fidelity** (accuracy) against the ground truth. You must also find (map) the location of **at least one rock sample**. They don't need to pick any rocks up, just have them appear in the map (should happen automatically if their map pixels in `Rover.worldmap[:,:,1]` overlap with sample locations.
 
 Launching in autonomous mode your rover can navigate and map autonomously.  
 Explain your results and how you might improve them in your writeup.  
 
-* Fill in the `perception_step()` function within the `perception.py` script with the appropriate image processing functions to create a map and update `Rover()` data (similar to what you did with `process_image()` in the notebook). 
-* Fill in the `decision_step()` function within the `decision.py` script with conditional statements that take into consideration the outputs of the `perception_step()` in deciding how to issue throttle, brake and steering commands. 
-* Iterate on your perception and decision function until your rover does a reasonable (need to define metric) job of navigating and mapping.  
+Iterate on your perception and decision function until your rover does a reasonable (need to define metric) job of navigating and mapping.  
 
 
-## 7. Future improvments.
+## 8. Future improvments.
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
 
