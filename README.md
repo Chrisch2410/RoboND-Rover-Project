@@ -47,13 +47,13 @@ Following python libraries was used as part of notebook analysis:
 
 ## 4.2 Image Processing Pipeline
 
-From a highlevel, the image processing pipeline that will be required to process images aquired from the rover camera in order to:
+The project is covering all of the three major steps of a robot function (Perception, Decison, and Action). Perception step in this case is the image processing pipeline that will be required to process images aquired from the rover camera in order to:
 
 * Produce rover driving angle.
 * Detect any golden rocks in the way 
-* Update World Map to show Navigation map
+* Update World Map to reflect Navigation map
 
-can be summrized as shown in below diagram.
+The pipeline can be summrized as shown in the following diagram:
 
 <p align="center"> <img src="./misc/pipeline.jpg"> </p>
 
