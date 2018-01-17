@@ -667,10 +667,10 @@ I was able to acheive all of the above mentioned conditions from the first run a
 
 ## 8. Future improvments.
 
-Color thresholding used for identification of navigable area can be furher improved to get better accuracy; one way to improve it is to use a range of colors instead of lower limit since this will help in excluding the sky color when the rover is facing one of the low terrian areas in which sky is visible to camera. 
+* Color thresholding used for identification of navigable area can be further improved to get better accuracy; one way to improve it is to use a range of colors instead of lower limit since this will help in excluding the sky color when the rover is facing one of the low terrain areas in which sky is visible to camera. 
 
-Image transformation can also be further improved by applying a better image cropping mask before transforming the perspective. In my code I clipped upper 50% part of the image using a stright line and there was very good improvement in results. Trying a curve clipping might give even better results.
+* Image transformation can also be further improved by applying a better image cropping mask before transforming the perspective. In my code I clipped upper 50% part of the image using a straight line and there was very good improvement in results. Trying a curve clipping might give even better results.
 
-Another way is to skip images that are aquired when the rover having a +ve or -ve pitch not near zero as suggested in project text.
+* Another way is to skip images that are acquired when the rover having a +ve or -ve pitch/roll not near zero as suggested in project text.
 
-One issue that needs to be fixed as part of future improvements is that rocks are always splashed when doing the perspective transform due to the fact that it is higher than ground level and we are transforming it using 2D not 3D vision.
+* Rocks are always splashed when doing the perspective transform due to the fact that it is higher than ground level and we are transforming it using 2D not 3D vision. one improvement is to simulate a 3D transformation to solve this issue.
