@@ -280,6 +280,10 @@ Following figure is showing the converted coordinates along with arrow showing t
 
 ## 4.7 World Map Image
 
+Having the converted rover centric coordinates now we can apply the processed image to the world map to mark navigable/obstacle/rock areas.
+
+We can test the functions using random genrated X,Y,Yaw postion for the rover:
+
 ```python
 # Rover yaw values will come as floats from 0 to 360
 # Generate a random value in this range
@@ -309,11 +313,10 @@ x_world, y_world = pix_to_world(xpix, ypix,
 
 worldmap[y_world, x_world] += 1
 ```
-
+I have added a `print()` command to show the selected random X,Y, and Yaw:
 
 ```python
 # Show results
-
 print('Xpos =', rover_xpos, 'Ypos =', rover_ypos, 'Yaw =', rover_yaw)
 ```
 
@@ -322,6 +325,8 @@ Xpos = [ 98.39547196] Ypos = [ 154.14458693] Yaw = [ 225.00715458]
 <p align="center"> <img src="./output/world_space.jpg"> </p>
 
 ## 4.8 Ground Truth Map
+
+Ground truth map is stored in a 1 channel image on a file; we will load it and convert it to three channels in order to use other 2 channels to mark navigable and obstacle areas. for Rock we will mark all 3 channels (white color).
 
 ```python
 map_path = '../calibration_images/map_bw.png'     # path to ground_truth image file
@@ -334,25 +339,30 @@ ground_truth_3d = np.dstack((ground_truth,      # Blue channel
                             )
                            ).astype(np.float)   # all BGR numbers are float
 ```
+We will need to flip the Y axis to match the video orintation.
 
 <p align="center"> <img src="./output/ground_truth.jpg"> </p>
 
 ## 4.9 Reading Recorded Data
 
-CSV file generated from the Rover Simulator Recorder will be having the following data columns:
+When recording data, CSV file generated from the Rover Simulator Recorder will be having the following data columns:
 
-(Path, SteerAngle, Throttle, Brake, Speed, X_Position, Y_Position, Pitch, Yaw, Roll)
+* Path
+* SteerAngle
+* Throttle
+* Brake
+* Speed
+* X_Position
+* Y_Position
+* Pitch
+* Yaw
+* Roll
 
 Number of rows will depend on how long the recording was done. for each row there will be one captured image in /IMG subfolder.
 
-You can pick one of the following datasets:
+I have recorded two datasets rec1_dataset and rec2_dataset in additon to the provided test_dataset. I used the short version rec1_dataset for fast testing of changes then when sure I use the long version rec2_dataset.
 
-rec1_dataset
-rec2_dataset
-test_dataset
-In [9]:
-
-
+following code is reading the dataset and storing it in a dataframe:
 
 ```python
 csv_path = '../rec2_dataset/robot_log.csv'            # path to CSV file
@@ -360,6 +370,8 @@ df = pd.read_csv(csv_path,delimiter=';',decimal='.')  # read all columns/rows in
 
 print(df[0:3])                                        # show 1st 3 samples
 ```
+I have printed the first 3 values just to have a look at data formats:
+
                                                 Path  SteerAngle  Throttle  \
 0  /home/mkhuthir/RoboND-Rover-Project/rec2_datas...         0.0       0.0   
 1  /home/mkhuthir/RoboND-Rover-Project/rec2_datas...         0.0       0.0   
@@ -370,6 +382,7 @@ print(df[0:3])                                        # show 1st 3 samples
 1    0.0    0.0    99.66999    85.58897  0.000236  56.82556 -4.337589e-07  
 2    0.0    0.0    99.66999    85.58897  0.000236  56.82556 -3.314796e-07 
 
+following code create a list of images filepaths. I have printed the first value for a check.
 
 ```python
 csv_img_list = df["Path"].tolist()  # Create list of image pathnames
@@ -378,8 +391,9 @@ print(csv_img_list[0])              # Show 1st sample
 ```
 /home/mkhuthir/RoboND-Rover-Project/rec2_dataset/IMG/robocam_2018_01_14_20_35_33_074.jpg
 
+finally; in order to generate a full video from the processed images we need to create a databucket having all data imported from the recorded set:
 
-Will create a data container class and populate it with saved data from csv file and Woldmap. Worldmap is instantiated as 200 x 200 grid corresponding to a 200m x 200m space (same size as the ground truth map: 200 x 200 pixels). This encompasses the full range of output position values in x and y from the sim.
+Following code will create a data container class and populate it with saved data from csv file and Woldmap. Worldmap is instantiated as 200 x 200 grid corresponding to a 200m x 200m space (same size as the ground truth map: 200 x 200 pixels). This encompasses the full range of output position values in x and y from the sim.
 
 ```python
 # define the class
