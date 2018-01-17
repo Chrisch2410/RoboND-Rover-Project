@@ -19,6 +19,7 @@ Please note that I have used the following environment to test/run the project:
 * Test Video recording FPS: **60 FPS**
 * drive_rover.py FPS: **16-18 FPS**
 * Anaconda: **Version 4.4.7**
+* Python **Version 3.6.4**
 * RoboND Anaconda Environment
 
 **Note:** running the simulator with different choices of resolution and graphics quality may produce different results, particularly on different machines!  
@@ -72,7 +73,7 @@ src = np.float32([
                  ])              # above data captured from grid calibration image.
 ```
 
-then one sequare in a top view map is taken as destination, adding 6 pixels to account for the unvisible distance from the rover edge to the 1st visible point.
+then one sequare in a top view map is taken as destination assuming that each sequare will be 10 pixels, and adding 6 pixels to account for the unvisible distance from the rover edge to the 1st visible point in image.
 
 ```python
 hs_size = 10/2             # half the size of one square
@@ -88,7 +89,9 @@ dst = np.float32([
                  [x_cntr - hs_size, y_end - 2*hs_size - b_ofst], # Left Top
                  ])
 ```
-Using OpenCV function 'cv2.warpPerspective()' we can now transform the prespective of aquired image from camera view into top-view.
+
+
+Using OpenCV functions `cv2.getPerspectiveTransform()` and `cv2.warpPerspective()` we can now transform the perspective of aquired image from camera view into top-view.
 
 ```python
 def perspect_transform(img, src, dst):
@@ -99,15 +102,19 @@ def perspect_transform(img, src, dst):
                                  (img.shape[1], img.shape[0]))
 ```
 
-Below are outputs for navigable and rock sample images:
+Below are outputs for transformation of a navigable area and a rock sample images:
 
 <p align="center"> <img src="./output/warp_fun.jpg"> </p>
 
 ## 4.4 Color Threshold Function
 
-Next stage is the color thresholding function that will be required to identify the navigable, obistcale, and golden rock areas. Doing color thresholding on image before prespective transform or after the prespective transform will give the same results. So order is these two stages does not matter.
+Next stage is the color thresholding function that will be required to identify the navigable, obistcale, and golden rock areas. Doing color thresholding on image before perspective transform or after the perspective transform will give the same results. So order in these two stages does not matter.
 
-For navigable/obsticale thresholding I used RGB numbers as advised in the project template since it was working fine and I have tried values other then `rgb_thr=(160,160,160)` but reverted back later becuase I did not get any improved results in detection of navigable area.
+For navigable/obstacle thresholding I used RGB color space numbers as advised in the project template since it was working fine and I have tried values other then `rgb_thr=(160,160,160)` but reverted back later becuase I did not get any improved results in detection of navigable area. however I think we can further improve it by using a color range instead of color lower limit.
+
+I used numpy `np.ones_like(img[:,:,0])` array to create the obstacle area image and reset pixels that are related to navigable area.
+
+During testing of the full pipeline I noticed that very big percentage of the wrongly identified navigable pixels are at the upper side of the transformed image; so I decided to mask out upper part of the image to improve the accuracy. I started with 10% clipping, then 20%, 30%, and finally I used 50% which shows very good improvement in accuracy without impacting the end results of driving angles. 
 
 ```python
 def navi_thresh(img):
