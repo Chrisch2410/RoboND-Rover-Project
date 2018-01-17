@@ -625,6 +625,9 @@ Iterate on your perception and decision function until your rover does a reasona
 
 
 ## 8. Future improvments.
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
+Color thresholding used for identification of navigable area can be furher improved to get better accuracy; one way to improve it is to use a range of colors instead of lower limit since this will help in excluding the sky color when the rover is facing one of the low terrian areas in which sky is visible to camera. 
 
+Image transformation can also be further improved by applying a better image cropping mask before transforming the perspective. In my code I clipped upper 50% part of the image using a stright line and there was very good improvement in results. Trying a curve clipping might give even better results.
+
+Another way is to skip images that are aquired when the rover having a +ve or -ve pitch not near zero as suggested in project text.
