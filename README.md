@@ -167,6 +167,9 @@ def rock_thresh(img):
 
 ## 4.5 Perspective Transform and Color Thresholding of Sample Image
 
+Now testing both perspective and thresholding functions on both navigable area and rock samples is giving us the required top view that will be used to produce the driving angle and update world maps.
+
+
 ```python
 navi_wt,obst_wt = navi_thresh(navi_w)  # Threshold warped image to show 
                                        # both navigable and obstacles areas
