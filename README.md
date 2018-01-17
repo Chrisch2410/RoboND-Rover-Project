@@ -372,7 +372,7 @@ print(df[0:3])                                        # show 1st 3 samples
 ```
 I have printed the first 3 values just to have a look at data formats:
 
-                                                Path  SteerAngle  Throttle  \
+Path  SteerAngle  Throttle
 0  /home/mkhuthir/RoboND-Rover-Project/rec2_datas...         0.0       0.0   
 1  /home/mkhuthir/RoboND-Rover-Project/rec2_datas...         0.0       0.0   
 2  /home/mkhuthir/RoboND-Rover-Project/rec2_datas...         0.0       0.0   
@@ -424,8 +424,9 @@ data = Databucket()
 
 ## 4.10 Image Processing Function
 
-Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
-And another! 
+Last step is to populate the `process_image()` function with all of above mentioned steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.
+
+The full code is as following:
 
 ```python
 # Define a function to pass stored images to reading rover position and yaw angle from csv file
@@ -635,11 +636,15 @@ ax.imshow(tst_frame.astype(np.uint8))
 f.savefig('../output/test_frame.jpg')
 ```
 
+Section 7 of the above code is to generate a video frame showing the captured image, perspective view, updated world map and I have added two additional sections. Section 8 to show a marker for the rover location on the map and section 9 to print telemetric as text.
+
+Sample generated frame is as following:
+
 <p align="center"> <img src="./output/test_frame.jpg"> </p>
 
 ## 4.11 Producing a Video to test image processing pipeline
 
-The final testing video after implementing all above mentioned steps is uploaded on YouTube on the following link:
+The full testing video after implementing all above mentioned steps is uploaded on YouTube on the following link:
 
 [![test video](http://img.youtube.com/vi/3z5Nvw0yioA/default.jpg)](http://www.youtube.com/watch?v=3z5Nvw0yioA)
 
@@ -647,20 +652,17 @@ as you can see in the video after covering more than 99.4% of the ground; fideli
 
 ## 5. Exporting Image Processing function to perception.py script
 
-Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
+Code from `process_image()` function in jupyter notebook was used to fill in the `perception_step()` at the bottom of the `perception.py` script.
 
 ## 6. Updateing Decision Script
 
-Fill in the `decision_step()` function within the `decision.py` script with conditional statements that take into consideration the outputs of the `perception_step()` in deciding how to issue throttle, brake and steering commands. 
+`decision_step()` script was left unchanged since it is already having enough logic to drive the rover when  `process_image()` is properly updated.
 
 ## 7. Running **Autonomous Navigation/Mapping**
 
-As per the project requirment the rover must **map at least 40%** of the environment with **60% fidelity** (accuracy) against the ground truth. You must also find (map) the location of **at least one rock sample**. They don't need to pick any rocks up, just have them appear in the map (should happen automatically if their map pixels in `Rover.worldmap[:,:,1]` overlap with sample locations.
+As per the project requirement the rover must **map at least 40%** of the environment with **60% fidelity** (accuracy) against the ground truth. It must also find (map) the location of **at least one rock sample**. It does not need to pick any rocks up, just have them appear in the map (should happen automatically if their map pixels in `Rover.worldmap[:,:,1]` overlap with sample locations.
 
-Launching in autonomous mode your rover can navigate and map autonomously.  
-Explain your results and how you might improve them in your writeup.  
-
-Iterate on your perception and decision function until your rover does a reasonable (need to define metric) job of navigating and mapping.  
+I was able to acheive all of the above mentioned conditions from the first run after updating the `perception_step()` function in `perception.py` script with code from `process_image()` function in test jupyter notebook.
 
 
 ## 8. Future improvments.
