@@ -117,31 +117,24 @@ I used numpy `np.ones_like(img[:,:,0])` array to create the obstacle area image 
 During testing of the full pipeline I noticed that very big percentage of the wrongly identified navigable pixels are at the upper side of the transformed image; so I decided to mask out upper part of the image to improve the accuracy. I started with 10% clipping, then 20%, 30%, and finally I used 50% which shows very good improvement in accuracy without impacting the end results of driving angles. 
 
 ```python
+# Define a function to threshold warped image and show navigable/obstacles areas
 def navi_thresh(img):
 
-    # Threshold of RGB > 160 does a nice job of identifying ground pixels only
-    rgb_thr=(160,160,160)
+    obst_lower = (0,0,0)    # RGB lower limit for obstacle area
+    obst_upper = (70,80,120)  # RGB upper limit for obstacle area    
+    
+    # sky color is between obst and navi ranges (70,80,120) to (160,160,160)
+    
+    navi_lower = (160,160,160)  # RGB lower limit for naviagble area
+    navi_upper = (255,255,255)  # RGB upper limit for naviagble area
+        
+    navi_t = cv2.inRange(img, navi_lower, navi_upper) #
+    obst_t = cv2.inRange(img, obst_lower, obst_upper)
      
-    # mask will contain a boolean array with "True" for each pixel above threshold
-    mask = (img[:,:,0] > rgb_thr[0]) \
-         & (img[:,:,1] > rgb_thr[1]) \
-         & (img[:,:,2] > rgb_thr[2])
-
-    # Create an array of zeros same xy size as img, but single channel
-    # Index the array with the mask and set to 1
-    navi = np.zeros_like(img[:,:,0])
-    navi[mask] = 1
+    navi_t[:int(img.shape[0]*.5),:]=0 # clip upper 50% of image to improve fidelity
+    # obst_t[:int(img.shape[0]*.5),:]=1 # clip upper 50% of image to improve fidelity
     
-    navi[:int(img.shape[0]*.5),:]=0 # clip upper 50% of image to improve fidelity
-    
-    # Create an array of ones same xy size as img, but single channel
-    # Index the array with the mask and set to 0
-    obst = np.ones_like(img[:,:,0])
-    obst[mask] = 0
-    
-    obst[:int(img.shape[0]*.5),:]=1 # clip upper 50% of image to improve fidelity
-    
-    return navi,obst                        # Return both images
+    return navi_t*255,obst_t*255    # Return both images
 
 ```
 For golden rock color thresholding initially I tried to use RGB color space to do the thresholding then I changed to use HSV color space since it was easier for me using GIMP color picker to identify the rock colors.
@@ -151,16 +144,17 @@ I started with lower limit [0,180,100] and upper limit [179,255,255] but I notic
 One issue that needs to be fixed as part of improvements is that rocks are always splashed when doing the perspective transform due to the fact that it is higher than ground level and we are transforming it using 2D not 3D vision.
 
 ```python
+# Define a function to threshold rock calibration image and isolate the rock.
 def rock_thresh(img):
     
     hsv_img=cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     
-    lower = np.array([0,200,100])
-    upper = np.array([179,255,255])
+    rock_lower = np.array([0,200,100])     # HSV lower limit for golden rocks
+    rock_upper = np.array([179,255,255])   # HSV upper limit for golden rocks
     
-    rock_t = cv2.inRange(hsv_img, lower, upper)
+    rock_t = cv2.inRange(hsv_img, rock_lower, rock_upper)
       
-    return rock_t
+    return rock_t*255
 ```
 
 <p align="center"> <img src="./output/thresh_fun.jpg"> </p>
