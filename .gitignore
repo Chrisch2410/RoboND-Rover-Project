@@ -1,8 +1,8 @@
 *.pyo
 *.pyc
 *.mp4
-/rec1_dataset
-/rec2_dataset
-/rec3_dataset
-/test_dataset
+/rec1_dataset/IMG
+/rec2_dataset/IMG
+/rec3_dataset/IMG
+/test_dataset/IMG
 
