@@ -661,7 +661,7 @@ I was able to acheive all of the above mentioned conditions from the first run a
 
 ## 8. Future improvments.
 
-* Color thresholding used for identification of navigable area can be further improved to get better accuracy; one way to improve it is to use a range of colors instead of lower limit since this will help in excluding the sky color when the rover is facing one of the low terrain areas in which sky is visible to camera. 
+* Color thresholding used for identification of navigable area can be further improved to get better accuracy; one way to improve it is to use a range of colors instead of lower limit since this will help in excluding the sky color when the rover is facing one of the low terrain areas in which sky is visible to camera. Another way is to use HSV color space instead of RGB/BGR color space.
 
 * Image transformation can also be further improved by applying a better image cropping mask before transforming the perspective. In my code I clipped upper 50% part of the image using a straight line and there was very good improvement in results. Trying a curve clipping might give even better results.
 
