@@ -640,7 +640,7 @@ Sample generated frame is as following:
 
 The full testing video after implementing all above mentioned steps is uploaded on YouTube on the following link:
 
-[![test video](http://img.youtube.com/vi/3z5Nvw0yioA/default.jpg)](http://www.youtube.com/watch?v=3z5Nvw0yioA)
+[![test video](http://img.youtube.com/vi/3z5Nvw0yioA/0.jpg)](http://www.youtube.com/watch?v=3z5Nvw0yioA)
 
 as you can see in the video after covering more than 99.4% of the ground; fidelity was 56.5% which is acceptable for this test but it can be much further improved.
 
